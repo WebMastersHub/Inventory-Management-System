@@ -1,6 +1,5 @@
 import * as readline from "readline";
 
-
 interface Product {
   id: number;
   name: string;
@@ -15,9 +14,7 @@ interface Transaction {
   totalPrice: number;
 }
 
-
 type Category = "electronics" | "groceries" | "books" | "clothing";
-
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -28,9 +25,7 @@ let products: Product[] = [];
 let transactions: Transaction[] = [];
 let idnum = 1;
 
-
 menuOption();
-
 
 function menuOption(): void {
   console.log("\nWelcome to the inventory System");
@@ -72,34 +67,35 @@ function hello(choice: string): void {
   }
 }
 
-
 function addProducts(): void {
   rl.question("Product name: ", (name: string) => {
     rl.question("Price: ", (price: string) => {
-      rl.question("Category(electronics, groceries, books, clothing): ", (category: string) => {
-        if (!isValidCategory(category)) {
-          console.log("❌ Invalid category.");
-          return menuOption();
+      rl.question(
+        "Category(electronics, groceries, books, clothing): ",
+        (category: string) => {
+          if (!isValidCategory(category)) {
+            console.log("❌ Invalid category.");
+            return menuOption();
+          }
+
+          rl.question("Stock: ", (stock: string) => {
+            const newProduct: Product = {
+              id: idnum++,
+              name: name.trim(),
+              price: parseFloat(price),
+              category: category.trim() as Category,
+              stock: parseInt(stock),
+            };
+
+            products.push(newProduct);
+            console.log(`✅ Added ${newProduct.name} to productList`);
+            menuOption();
+          });
         }
-
-        rl.question("Stock: ", (stock: string) => {
-          const newProduct: Product = {
-            id: idnum++,
-            name: name.trim(),
-            price: parseFloat(price),
-            category: category.trim() as Category,
-            stock: parseInt(stock),
-          };
-
-          products.push(newProduct);
-          console.log(`✅ Added ${newProduct.name} to productList`);
-          menuOption();
-        });
-      });
+      );
     });
   });
 }
-
 
 function viewProducts(): void {
   console.log("\n=== PRODUCTS ===");
@@ -108,50 +104,60 @@ function viewProducts(): void {
     console.log("No products yet!");
   } else {
     products.forEach((item) => {
-      console.log(`${item.id}. ${item.name} - GHC${item.price} ${item.category} (${item.stock} available)`);
+      console.log(
+        `${item.id}. ${item.name} - GHC${item.price} ${item.category} (${item.stock} available)`
+      );
     });
   }
 
   menuOption();
 }
 
-
 function buyProducts(): void {
-  rl.question("Which product will you like to buy? ", (purchasedProduct: string) => {
-    const product = products.find((p) => p.name.toLowerCase() === purchasedProduct.trim().toLowerCase());
+  rl.question(
+    "Which product will you like to buy? ",
+    (purchasedProduct: string) => {
+      const product = products.find(
+        (p) => p.name.toLowerCase() === purchasedProduct.trim().toLowerCase()
+      );
 
-    if (!product) {
-      console.log("❌ Product not found!");
-      return menuOption();
-    }
-
-    rl.question("How many will you like to buy? ", (quantityInput: string) => {
-      const quantity = parseInt(quantityInput);
-
-      if (isNaN(quantity) || quantity <= 0) {
-        console.log("❌ Invalid quantity.");
-      } else if (quantity > product.stock) {
-        console.log("❌ We don't have enough stock available.");
-      } else {
-        product.stock -= quantity;
-
-        const total = product.price * quantity;
-        const transaction: Transaction = {
-          productName: product.name,
-          quantity: quantity,
-          totalPrice: total,
-        };
-
-        transactions.push(transaction);
-
-        console.log(`✅ Purchase successful! You bought ${quantity} ${product.name}(s).`);
+      if (!product) {
+        console.log("❌ Product not found!");
+        return menuOption();
       }
 
-      menuOption();
-    });
-  });
-}
+      rl.question(
+        "How many will you like to buy? ",
+        (quantityInput: string) => {
+          const quantity = parseInt(quantityInput);
 
+          if (isNaN(quantity) || quantity <= 0) {
+            console.log("❌ Invalid quantity.");
+          } else if (quantity > product.stock) {
+            console.log("❌ We don't have enough stock available.");
+          } else {
+            product.stock -= quantity;
+
+            const total = product.price * quantity;
+            const transaction: Transaction = {
+              productName: product.name,
+              quantity: quantity,
+              totalPrice: total,
+            };
+
+            transactions.push(transaction);
+
+            console.log(
+              `✅ Purchase successful! You bought ${quantity} ${product.name}(s).`
+            );
+          }
+
+          menuOption();
+        }
+      );
+    }
+  );
+}
 
 function inventoryReport(): void {
   console.log("\n=== INVENTORY REPORT ===");
@@ -160,13 +166,14 @@ function inventoryReport(): void {
     console.log("No products in inventory.");
   } else {
     products.forEach((p) => {
-      console.log(`${p.name} (${p.category}) - GHC${p.price} | Stock: ${p.stock}`);
+      console.log(
+        `${p.name} (${p.category}) - GHC${p.price} | Stock: ${p.stock}`
+      );
     });
   }
 
   menuOption();
 }
-
 
 function salesReport(): void {
   console.log("\n=== SALES REPORT ===");
@@ -175,15 +182,23 @@ function salesReport(): void {
     console.log("No sales yet.");
   } else {
     transactions.forEach((item, index) => {
-      console.log(`${index + 1}. ${item.productName} | Qty: ${item.quantity} | Total: GHC${item.totalPrice.toFixed(2)}`);
+      console.log(
+        `${index + 1}. ${item.productName} | Qty: ${
+          item.quantity
+        } | Total: GHC${item.totalPrice.toFixed(2)}`
+      );
     });
   }
 
   menuOption();
 }
 
-
 function isValidCategory(category: string): category is Category {
-  const validCategories: Category[] = ["electronics", "groceries", "books", "clothing"];
+  const validCategories: Category[] = [
+    "electronics",
+    "groceries",
+    "books",
+    "clothing",
+  ];
   return validCategories.includes(category.trim().toLowerCase() as Category);
 }

@@ -137,6 +137,11 @@ function salesReport() {
     menuOption();
 }
 function isValidCategory(category) {
-    var validCategories = ["electronics", "groceries", "books", "clothing"];
+    var validCategories = [
+        "electronics",
+        "groceries",
+        "books",
+        "clothing",
+    ];
     return validCategories.includes(category.trim().toLowerCase());
 }
