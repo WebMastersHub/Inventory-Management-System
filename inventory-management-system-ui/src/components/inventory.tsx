@@ -1,0 +1,65 @@
+import Cat from "./category";
+function Invent() {
+  return (
+    <>
+      <Cat
+        name="Blender"
+        price="500"
+        category="Electronics"
+        stock="10"
+        date="2025-01-06"
+      />
+      <Cat
+        name="Blender"
+        price="500"
+        category="Electronics"
+        stock="10"
+        date="2025-01-06"
+      />
+      <Cat
+        name="Blender"
+        price="500"
+        category="Electronics"
+        stock="10"
+        date="2025-01-06"
+      />
+      <Cat
+        name="Blender"
+        price="500"
+        category="Electronics"
+        stock="10"
+        date="2025-01-06"
+      />
+      <Cat
+        name="Blender"
+        price="500"
+        category="Electronics"
+        stock="10"
+        date="2025-01-06"
+      />
+      <Cat
+        name="Blender"
+        price="500"
+        category="Electronics"
+        stock="10"
+        date="2025-01-06"
+      />
+      <Cat
+        name="Blender"
+        price="500"
+        category="Electronics"
+        stock="10"
+        date="2025-01-06"
+      />
+      <Cat
+        name="Blender"
+        price="500"
+        category="Electronics"
+        stock="10"
+        date="2025-01-06"
+      />
+    </>
+  );
+}
+
+export default Invent;

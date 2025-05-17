@@ -1,6 +1,6 @@
 const BuyComponent = () => {
   return (
-    <div className="pt-4 flex justify-between">
+    <div className="pt-4 flex justify-between mb-5">
       <h1>Blendor</h1>
       <h1>500</h1>
       <h1>Electronics</h1>

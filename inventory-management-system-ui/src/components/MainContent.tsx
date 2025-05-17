@@ -1,5 +1,6 @@
 import AddComponent from "./Add";
 import BuyComponent from "./Buy";
+import Invent from "./inventory";
 
 const MainContent = () => {
   return (
@@ -14,6 +15,7 @@ const MainContent = () => {
         </div>
         <AddComponent />
         <BuyComponent />
+        <Invent />
       </div>
     </div>
   );
